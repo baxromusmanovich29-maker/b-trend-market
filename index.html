@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>B-TREND MARKET — B-TREND MCHJ</title>
+<style>
+:root{--p:#1769aa;--d:#123047;--a:#ff9f1c;--bg:#f4f7fb;--card:#fff;--muted:#64748b}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:#1f2937}
+header{background:linear-gradient(135deg,#123047,#1769aa);color:#fff;padding:18px 5%;position:sticky;top:0;z-index:5}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}.logo{font-size:25px;font-weight:800}.tag{font-size:12px;opacity:.85}
+nav a{color:#fff;text-decoration:none;margin:0 8px;font-weight:600}.cart{background:#fff;color:var(--d);border:0;border-radius:8px;padding:10px 14px;font-weight:700;cursor:pointer}
+.hero{background:#fff;padding:55px 6%;display:grid;grid-template-columns:1.4fr 1fr;gap:30px;align-items:center}.hero h1{font-size:44px;color:var(--d);margin:0 0 14px}.hero p{font-size:18px;line-height:1.6;color:#475569}.hero-card{background:#eaf3fb;border-radius:20px;padding:40px;text-align:center;font-size:90px}
+.container{max-width:1200px;margin:auto;padding:35px 6%}h2{color:var(--d)}
+.controls{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}input,select,textarea{padding:12px;border:1px solid #cbd5e1;border-radius:8px;font-size:15px}#search{flex:1;min-width:240px}
+.categories{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}.cat{border:1px solid #cbd5e1;background:#fff;padding:9px 14px;border-radius:20px;cursor:pointer}.cat.active{background:var(--p);color:#fff}
+.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:18px}.card{background:#fff;border-radius:14px;padding:17px;box-shadow:0 4px 15px #0000000c}.pic{height:145px;background:#eef4f8;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:58px}.card h3{margin:10px 0 5px}.price{font-size:19px;font-weight:800;color:var(--p);margin:10px 0}.muted{color:var(--muted);font-size:13px}.btn{background:var(--a);color:#fff;border:0;border-radius:8px;padding:12px 17px;font-weight:700;cursor:pointer}.btn.blue{background:var(--p)}.card .btn{width:100%}
+form{max-width:700px;display:grid;gap:12px}.about{background:#fff;border-radius:14px}footer{background:var(--d);color:#fff;text-align:center;padding:25px}
+.modal{display:none;position:fixed;inset:0;background:#0008;align-items:center;justify-content:center;padding:20px;z-index:10}.box{background:#fff;padding:25px;border-radius:14px;max-width:620px;width:100%;max-height:90vh;overflow:auto}.close{float:right;font-size:24px;cursor:pointer}
+.cart-item{display:flex;justify-content:space-between;gap:10px;padding:12px 0;border-bottom:1px solid #e2e8f0}.qty{width:65px}
+.admin{background:#fff;border-radius:14px;padding:20px}.admin-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}.admin-list{margin-top:18px}.order-card{border:1px solid #e2e8f0;border-radius:10px;padding:14px;margin:10px 0;background:#f8fafc}.order-card h4{margin:0 0 8px;color:var(--d)}.order-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.order-actions select{padding:8px}
+@media(max-width:750px){.hero{grid-template-columns:1fr}.hero h1{font-size:34px}nav{width:100%;display:flex;flex-wrap:wrap;gap:6px}nav a{margin:0 4px}}
+</style>
+</head>
+<body>
+<header><div class="nav">
+<div><div class="logo">B-TREND MARKET</div><div class="tag">Tashkilotlar uchun tezkor xaridlar</div></div>
+<nav><a href="#products">Tovarlar</a><a href="#request">So‘rov</a><a href="#contact">Aloqa</a><a href="#admin">Admin</a></nav>
+<button class="cart" onclick="openCart()">🛒 Savatcha (<span id="cartCount">0</span>)</button>
+</div></header>
+
+<section class="hero"><div><h1>Kerakli tovarni tez toping.</h1><p>B-TREND MARKET — kanselyariya, xo‘jalik mollari, maishiy texnika, mebel va boshqa mahsulotlar bo‘yicha taklif va buyurtmalar platformasi.</p><a class="btn" href="#request">Taklif so‘rash</a></div><div class="hero-card">🛒📦</div></section>
+
+<section class="container" id="products"><h2>Mahsulotlar katalogi</h2>
+<div class="controls"><input id="search" placeholder="Tovar nomini qidiring..." oninput="render()"><select id="sort" onchange="render()"><option value="">Saralash</option><option value="low">Arzonidan</option><option value="high">Qimmatidan</option></select></div>
+<div class="categories"><button class="cat active" onclick="setCat('Barchasi',this)">Barchasi</button><button class="cat" onclick="setCat('Kanselyariya',this)">Kanselyariya</button><button class="cat" onclick="setCat('Maishiy texnika',this)">Maishiy texnika</button><button class="cat" onclick="setCat('Xo‘jalik mollari',this)">Xo‘jalik mollari</button><button class="cat" onclick="setCat('Mebel',this)">Mebel</button></div>
+<div class="products" id="productGrid"></div></section>
+
+<section class="container" id="request"><div class="about"><h2>Kerakli tovar bo‘yicha so‘rov yuboring</h2><p>Topa olmayotgan mahsulotingizni yozing — siz bilan bog‘lanib, narx va yetkazib berish bo‘yicha taklif beramiz.</p>
+<form onsubmit="sendRequest(event)"><input id="name" required placeholder="Tashkilot yoki F.I.Sh."><input id="phone" required placeholder="Telefon raqami"><textarea id="need" required rows="5" placeholder="Tovar, miqdori va texnik parametrlari..."></textarea><button class="btn" type="submit">So‘rov yuborish</button></form></div></section>
+
+<section class="container" id="admin">
+<div class="admin">
+<h2>🔐 Admin panel — B-TREND MCHJ</h2>
+<div id="loginArea">
+<p class="muted">Bu bo‘lim faqat siz uchun.</p>
+<input id="adminPass" type="password" placeholder="Admin parol">
+<button class="btn blue" onclick="loginAdmin()">Kirish</button>
+</div>
+<div id="panelArea" style="display:none">
+<p><b>Admin panel ochildi ✅</b></p>
+<div class="admin-grid">
+<input id="pname" placeholder="Mahsulot nomi">
+<select id="pcat"><option>Kanselyariya</option><option>Maishiy texnika</option><option>Xo‘jalik mollari</option><option>Mebel</option></select>
+<input id="pprice" type="number" placeholder="Narx (so‘m)">
+<input id="picon" placeholder="Emoji, masalan 🧹">
+<button class="btn blue" onclick="addProduct()">+ Mahsulot qo‘shish</button>
+</div>
+<div class="admin-list" id="adminList"></div>
+<hr style="margin:25px 0;border:0;border-top:1px solid #e2e8f0">
+<h3>📦 Buyurtmalar</h3>
+<div id="ordersList"><p class="muted">Hozircha buyurtmalar yo‘q.</p></div>
+<button class="btn" style="margin-top:15px" onclick="logoutAdmin()">Chiqish</button>
+</div>
+</div></section>
+
+
+<section class="container" id="contact">
+<div class="about">
+<h2>📞 Biz bilan bog‘laning</h2>
+<p><b>B-TREND MCHJ</b> — xaridlar va mahsulotlar bo‘yicha murojaat uchun:</p>
+<div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:15px">
+<a class="btn blue" href="tel:+998333821111">📞 +998 33 382 11 11</a>
+<a class="btn" href="https://t.me/Usmanovich111" target="_blank">📲 Telegram: @Usmanovich111</a>
+</div>
+</div>
+</section>
+
+<footer>© 2026 B-TREND MARKET | B-TREND MCHJ<br><br>📞 +998 33 382 11 11 &nbsp; | &nbsp; 📲 @Usmanovich111</footer>
+
+<div class="modal" id="modal"><div class="box"><span class="close" onclick="closeModal()">×</span><div id="modalContent"></div></div></div>
+
+<script>
+const defaultProducts=[
+{name:"ART-VCB 0316E changyutgich",cat:"Maishiy texnika",price:0,icon:"🧹"},
+{name:"A4 ofis qog‘ozi",cat:"Kanselyariya",price:0,icon:"📄"},
+{name:"Ofis ruchkasi",cat:"Kanselyariya",price:0,icon:"🖊️"},
+{name:"Chinni idishlar",cat:"Xo‘jalik mollari",price:0,icon:"🍽️"},
+{name:"Ofis stuli",cat:"Mebel",price:0,icon:"🪑"},
+{name:"Televizor",cat:"Maishiy texnika",price:0,icon:"📺"}
+];
+let products=JSON.parse(localStorage.getItem('bt_products')||'null')||defaultProducts, cart=[], activeCat='Barchasi';
+const ADMIN_PASSWORD='Bax1111';
+function loginAdmin(){
+ if(document.getElementById('adminPass').value===ADMIN_PASSWORD){
+  document.getElementById('loginArea').style.display='none';
+  document.getElementById('panelArea').style.display='block';
+  renderAdmin();
+ } else alert('Parol noto‘g‘ri ❌');
+}
+function logoutAdmin(){
+ document.getElementById('panelArea').style.display='none';
+ document.getElementById('loginArea').style.display='block';
+ document.getElementById('adminPass').value='';
+}
+
+function save(){localStorage.setItem('bt_products',JSON.stringify(products))}
+function setCat(c,e){activeCat=c;document.querySelectorAll('.cat').forEach(x=>x.classList.remove('active'));e.classList.add('active');render()}
+function render(){let q=document.getElementById('search').value.toLowerCase(),s=document.getElementById('sort').value;let a=products.filter(p=>(activeCat==='Barchasi'||p.cat===activeCat)&&p.name.toLowerCase().includes(q));if(s==='low')a.sort((x,y)=>(x.price||0)-(y.price||0));if(s==='high')a.sort((x,y)=>(y.price||0)-(x.price||0));document.getElementById('productGrid').innerHTML=a.map((p,i)=>`<div class="card"><div class="pic">${p.icon||'📦'}</div><small>${p.cat}</small><h3>${p.name}</h3><div class="price">${p.price?p.price.toLocaleString()+' so‘m':'Narxni so‘rash'}</div><button class="btn" onclick="addCart(${products.indexOf(p)})">🛒 Savatchaga qo‘shish</button></div>`).join('');renderAdmin()}
+function addCart(i){let p=products[i],x=cart.find(c=>c.i===i);if(x)x.q++;else cart.push({i,q:1});updateCart();alert('Savatchaga qo‘shildi ✅')}
+function updateCart(){document.getElementById('cartCount').innerText=cart.reduce((a,x)=>a+x.q,0)}
+function openCart(){let total=0;let rows=cart.map(x=>{let p=products[x.i];total+=(p.price||0)*x.q;return `<div class="cart-item"><div><b>${p.name}</b><br><span class="muted">${p.price?p.price.toLocaleString()+' so‘m':'Narxni so‘rash'}</span></div><input class="qty" type="number" min="1" value="${x.q}" onchange="changeQty(${x.i},this.value)"></div>`}).join('');document.getElementById('modalContent').innerHTML=`<h2>🛒 Savatcha</h2>${rows||'<p>Savatcha bo‘sh.</p>'}<h3>Jami: ${total.toLocaleString()} so‘m</h3>${cart.length?'<button class="btn" onclick="checkout()">Buyurtma berish</button>':''}`;document.getElementById('modal').style.display='flex'}
+function changeQty(i,q){let x=cart.find(c=>c.i===i);if(x)x.q=Math.max(1,+q);updateCart();openCart()}
+function checkout(){document.getElementById('modalContent').innerHTML=`<h2>Buyurtma ma’lumotlari</h2><form onsubmit="submitOrder(event)"><input id="oname" required placeholder="Tashkilot / F.I.Sh."><input id="ophone" required placeholder="Telefon raqami"><textarea id="oaddress" rows="3" placeholder="Yetkazib berish manzili"></textarea><button class="btn">Buyurtmani yuborish</button></form>`}
+function submitOrder(e){e.preventDefault();let list=cart.map(x=>products[x.i].name+' x '+x.q).join('\\n');let text=`Buyurtma:\\n${list}\\n\\nMijoz: ${oname.value}\\nTelefon: ${ophone.value}\\nManzil: ${oaddress.value}`;let orders=JSON.parse(localStorage.getItem('bt_orders')||'[]');
+orders.unshift({id:Date.now(),date:new Date().toLocaleString('uz-UZ'),items:list,customer:oname.value,phone:ophone.value,address:oaddress.value,status:'Yangi'});
+localStorage.setItem('bt_orders',JSON.stringify(orders));
+localStorage.setItem('last_order',text);cart=[];updateCart();document.getElementById('modalContent').innerHTML='<h2>Buyurtma qabul qilindi ✅</h2><p>Tez orada siz bilan bog‘lanamiz.</p>'}
+function ask(name){need.value=name+' — miqdori: ';document.getElementById('request').scrollIntoView({behavior:'smooth'})}
+function sendRequest(e){e.preventDefault();localStorage.setItem('last_request',`So‘rov: ${need.value}\\nMijoz: ${name.value}\\nTelefon: ${phone.value}`);document.getElementById('modalContent').innerHTML='<h2>So‘rov qabul qilindi ✅</h2><p>Ma’lumot saqlandi. Biz bilan bog‘laning:</p><p>📞 <a href="tel:+998333821111">+998 33 382 11 11</a><br>📲 <a href="https://t.me/Usmanovich111" target="_blank">@Usmanovich111</a></p>';document.getElementById('modal').style.display='flex';e.target.reset()}
+function addProduct(){let n=pname.value.trim(),c=pcat.value,pr=+pprice.value||0,ic=picon.value||'📦';if(!n)return alert('Mahsulot nomini kiriting');products.push({name:n,cat:c,price:pr,icon:ic});save();pname.value='';pprice.value='';picon.value='';render();alert('Mahsulot qo‘shildi ✅')}
+function deleteProduct(i){if(confirm('O‘chirasizmi?')){products.splice(i,1);save();render()}}
+function renderAdmin(){
+document.getElementById('adminList').innerHTML=products.map((p,i)=>`<div class="cart-item"><span>${p.icon} <b>${p.name}</b> — ${p.cat} — ${p.price?p.price.toLocaleString()+' so‘m':'Narxni so‘rash'}</span><button onclick="deleteProduct(${i})">🗑️</button></div>`).join('');
+let orders=JSON.parse(localStorage.getItem('bt_orders')||'[]');
+document.getElementById('ordersList').innerHTML=orders.length?orders.map(o=>`<div class="order-card"><h4>🛒 Buyurtma #${o.id}</h4><div><b>👤 Mijoz:</b> ${o.customer}</div><div><b>📞 Telefon:</b> ${o.phone}</div><div><b>📍 Manzil:</b> ${o.address||'Ko‘rsatilmagan'}</div><div><b>📦 Tovarlar:</b><br>${o.items.replace(/\\n/g,'<br>')}</div><div class="muted">🕐 ${o.date}</div><div class="order-actions"><select onchange="changeOrderStatus(${o.id},this.value)"><option ${o.status==='Yangi'?'selected':''}>Yangi</option><option ${o.status==='Qabul qilindi'?'selected':''}>Qabul qilindi</option><option ${o.status==='Yetkazildi'?'selected':''}>Yetkazildi</option><option ${o.status==='Bekor qilindi'?'selected':''}>Bekor qilindi</option></select><button onclick="deleteOrder(${o.id})">🗑️ O‘chirish</button></div></div>`).join(''):'<p class="muted">Hozircha buyurtmalar yo‘q.</p>';
+}
+function changeOrderStatus(id,status){let orders=JSON.parse(localStorage.getItem('bt_orders')||'[]');let o=orders.find(x=>x.id===id);if(o){o.status=status;localStorage.setItem('bt_orders',JSON.stringify(orders));renderAdmin()}}
+function deleteOrder(id){if(confirm('Bu buyurtmani o‘chirasizmi?')){let orders=JSON.parse(localStorage.getItem('bt_orders')||'[]').filter(x=>x.id!==id);localStorage.setItem('bt_orders',JSON.stringify(orders));renderAdmin()}}
+function closeModal(){document.getElementById('modal').style.display='none'}
+render();updateCart();
+</script>
+</body></html>
