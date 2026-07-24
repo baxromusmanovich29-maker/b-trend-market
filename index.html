@@ -1,132 +1,281 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>B-TREND MARKET — B-TREND MCHJ</title>
-<style>
-:root{--p:#1769aa;--d:#123047;--a:#ff9f1c;--bg:#f4f7fb;--card:#fff;--muted:#64748b}
-*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:#1f2937}
-header{background:linear-gradient(135deg,#123047,#1769aa);color:#fff;padding:18px 5%;position:sticky;top:0;z-index:5}
-.nav{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}.logo{font-size:25px;font-weight:800}.tag{font-size:12px;opacity:.85}
-nav a{color:#fff;text-decoration:none;margin:0 8px;font-weight:600}.cart{background:#fff;color:var(--d);border:0;border-radius:8px;padding:10px 14px;font-weight:700;cursor:pointer}
-.hero{background:#fff;padding:55px 6%;display:grid;grid-template-columns:1.4fr 1fr;gap:30px;align-items:center}.hero h1{font-size:44px;color:var(--d);margin:0 0 14px}.hero p{font-size:18px;line-height:1.6;color:#475569}.hero-card{background:#eaf3fb;border-radius:20px;padding:40px;text-align:center;font-size:90px}
-.container{max-width:1200px;margin:auto;padding:35px 6%}h2{color:var(--d)}
-.controls{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}input,select,textarea{padding:12px;border:1px solid #cbd5e1;border-radius:8px;font-size:15px}#search{flex:1;min-width:240px}
-.categories{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}.cat{border:1px solid #cbd5e1;background:#fff;padding:9px 14px;border-radius:20px;cursor:pointer}.cat.active{background:var(--p);color:#fff}
-.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:18px}.card{background:#fff;border-radius:14px;padding:17px;box-shadow:0 4px 15px #0000000c}.pic{height:145px;background:#eef4f8;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:58px}.card h3{margin:10px 0 5px}.price{font-size:19px;font-weight:800;color:var(--p);margin:10px 0}.muted{color:var(--muted);font-size:13px}.btn{background:var(--a);color:#fff;border:0;border-radius:8px;padding:12px 17px;font-weight:700;cursor:pointer}.btn.blue{background:var(--p)}.card .btn{width:100%}
-form{max-width:700px;display:grid;gap:12px}.about{background:#fff;border-radius:14px}footer{background:var(--d);color:#fff;text-align:center;padding:25px}
-.modal{display:none;position:fixed;inset:0;background:#0008;align-items:center;justify-content:center;padding:20px;z-index:10}.box{background:#fff;padding:25px;border-radius:14px;max-width:620px;width:100%;max-height:90vh;overflow:auto}.close{float:right;font-size:24px;cursor:pointer}
-.cart-item{display:flex;justify-content:space-between;gap:10px;padding:12px 0;border-bottom:1px solid #e2e8f0}.qty{width:65px}
-.admin{background:#fff;border-radius:14px;padding:20px}.admin-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}.admin-list{margin-top:18px}.order-card{border:1px solid #e2e8f0;border-radius:10px;padding:14px;margin:10px 0;background:#f8fafc}.order-card h4{margin:0 0 8px;color:var(--d)}.order-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.order-actions select{padding:8px}
-@media(max-width:750px){.hero{grid-template-columns:1fr}.hero h1{font-size:34px}nav{width:100%;display:flex;flex-wrap:wrap;gap:6px}nav a{margin:0 4px}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>B-TREND MARKET</title>
+  <!-- Google Fonts & FontAwesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #ff9f1c;
+      --primary-hover: #e08b12;
+      --bg: #f8f9fa;
+      --card-bg: #ffffff;
+      --text: #2b2d42;
+      --text-muted: #6c757d;
+      --radius: 12px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+    body { background-color: var(--bg); color: var(--text); padding-bottom: 50px; }
+
+    /* Header */
+    header {
+      background: #ffffff;
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .logo { font-size: 22px; font-weight: 800; color: var(--primary); letter-spacing: -0.5px; }
+    .profile-btn {
+      border: 0; border-radius: 20px; padding: 10px 18px;
+      background: var(--primary); color: #fff; font-weight: 600;
+      cursor: pointer; transition: 0.2s ease; display: flex; align-items: center; gap: 6px;
+    }
+    .profile-btn:hover { background: var(--primary-hover); transform: translateY(-1px); }
+
+    /* Hero & Container */
+    .container { max-width: 1100px; margin: 30px auto; padding: 0 16px; }
+    h1 { text-align: center; margin-bottom: 24px; font-size: 28px; font-weight: 700; }
+
+    /* Search & Filter Controls */
+    .controls {
+      display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 30px; justify-content: center;
+    }
+    .search-box {
+      flex: 1; min-width: 280px; max-width: 500px;
+      padding: 12px 18px; border: 1px solid #e0e0e0; border-radius: 25px;
+      outline: none; font-size: 15px; transition: 0.2s; background: #fff;
+    }
+    .search-box:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(255, 159, 28, 0.2); }
+    
+    .category-select {
+      padding: 12px 18px; border: 1px solid #e0e0e0; border-radius: 25px;
+      outline: none; font-size: 15px; background: #fff; cursor: pointer;
+    }
+
+    /* Product Grid */
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background: var(--card-bg); border-radius: var(--radius); padding: 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.03); transition: 0.3s ease;
+      display: flex; flex-direction: column; justify-content: space-between; border: 1px solid #f0f0f0;
+    }
+    .card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.08); }
+    .pic { font-size: 48px; text-align: center; margin-bottom: 12px; background: #fff9f0; padding: 15px; border-radius: var(--radius); }
+    small { color: var(--text-muted); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+    h3 { font-size: 16px; font-weight: 600; margin: 6px 0 10px; line-height: 1.4; flex-grow: 1; }
+    .price { font-size: 14px; font-weight: 700; color: #2a9d8f; margin-bottom: 14px; }
+    
+    .card button {
+      width: 100%; border: none; background: var(--text); color: #fff;
+      padding: 12px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: 0.2s;
+    }
+    .card button:hover { background: var(--primary); color: #fff; }
+
+    /* Modal Windows */
+    .modal {
+      display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(4px); z-index: 1000; align-items: center; justify-content: center;
+    }
+    .box {
+      background: #fff; width: min(92%, 420px); border-radius: 16px; padding: 24px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2); position: relative; animation: fadeIn 0.2s ease-out;
+    }
+    @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+    .close { position: absolute; top: 16px; right: 20px; font-size: 24px; cursor: pointer; color: var(--text-muted); }
+    
+    .box h2 { font-size: 20px; margin-bottom: 16px; }
+    .box input, .box textarea {
+      width: 100%; padding: 12px; margin: 8px 0 14px; border: 1px solid #ddd;
+      border-radius: 8px; outline: none; font-size: 14px;
+    }
+    .box input:focus, .box textarea:focus { border-color: var(--primary); }
+    .box button {
+      width: 100%; padding: 12px; border: none; background: var(--primary);
+      color: #fff; font-weight: 700; border-radius: 8px; cursor: pointer; transition: 0.2s;
+    }
+    .box button:hover { background: var(--primary-hover); }
+  </style>
 </head>
 <body>
-<header><div class="nav">
-<div><div class="logo">B-TREND MARKET</div><div class="tag">Tashkilotlar uchun tezkor xaridlar</div></div>
-<nav><a href="#products">Tovarlar</a><a href="#request">So‘rov</a><a href="#contact">Aloqa</a><a href="#admin">Admin</a></nav>
-<button class="cart" onclick="openCart()">🛒 Savatcha (<span id="cartCount">0</span>)</button>
-</div></header>
 
-<section class="hero"><div><h1>Kerakli tovarni tez toping.</h1><p>B-TREND MARKET — kanselyariya, xo‘jalik mollari, maishiy texnika, mebel va boshqa mahsulotlar bo‘yicha taklif va buyurtmalar platformasi.</p><a class="btn" href="#request">Taklif so‘rash</a></div><div class="hero-card">🛒📦</div></section>
+<header>
+  <div class="logo">B-TREND MARKET</div>
+  <button class="profile-btn" onclick="openProfile()">👤 Profilim</button>
+</header>
 
-<section class="container" id="products"><h2>Mahsulotlar katalogi</h2>
-<div class="controls"><input id="search" placeholder="Tovar nomini qidiring..." oninput="render()"><select id="sort" onchange="render()"><option value="">Saralash</option><option value="low">Arzonidan</option><option value="high">Qimmatidan</option></select></div>
-<div class="categories"><button class="cat active" onclick="setCat('Barchasi',this)">Barchasi</button><button class="cat" onclick="setCat('Kanselyariya',this)">Kanselyariya</button><button class="cat" onclick="setCat('Maishiy texnika',this)">Maishiy texnika</button><button class="cat" onclick="setCat('Xo‘jalik mollari',this)">Xo‘jalik mollari</button><button class="cat" onclick="setCat('Mebel',this)">Mebel</button></div>
-<div class="products" id="productGrid"></div></section>
+<div class="container">
+  <h1>Kerakli tovarni tez toping</h1>
+  
+  <!-- Qidiruv va Filtr -->
+  <div class="controls">
+    <input type="text" id="searchInput" class="search-box" placeholder="Mahsulot qidirish..." oninput="filterProducts()">
+    <select id="categorySelect" class="category-select" onchange="filterProducts()">
+      <option value="all">Barcha kategoriyalar</option>
+      <option value="Maishiy texnika">Maishiy texnika</option>
+      <option value="Kanselyariya">Kanselyariya</option>
+      <option value="Xo‘jalik mollari">Xo‘jalik mollari</option>
+      <option value="Mebel">Mebel</option>
+    </select>
+  </div>
 
-<section class="container" id="request"><div class="about"><h2>Kerakli tovar bo‘yicha so‘rov yuboring</h2><p>Topa olmayotgan mahsulotingizni yozing — siz bilan bog‘lanib, narx va yetkazib berish bo‘yicha taklif beramiz.</p>
-<form onsubmit="sendRequest(event)"><input id="name" required placeholder="Tashkilot yoki F.I.Sh."><input id="phone" required placeholder="Telefon raqami"><textarea id="need" required rows="5" placeholder="Tovar, miqdori va texnik parametrlari..."></textarea><button class="btn" type="submit">So‘rov yuborish</button></form></div></section>
-
-<section class="container" id="admin">
-<div class="admin">
-<h2>🔐 Admin panel — B-TREND MCHJ</h2>
-<div id="loginArea">
-<p class="muted">Bu bo‘lim faqat siz uchun.</p>
-<input id="adminPass" type="password" placeholder="Admin parol">
-<button class="btn blue" onclick="loginAdmin()">Kirish</button>
+  <div class="products" id="products"></div>
 </div>
-<div id="panelArea" style="display:none">
-<p><b>Admin panel ochildi ✅</b></p>
-<div class="admin-grid">
-<input id="pname" placeholder="Mahsulot nomi">
-<select id="pcat"><option>Kanselyariya</option><option>Maishiy texnika</option><option>Xo‘jalik mollari</option><option>Mebel</option></select>
-<input id="pprice" type="number" placeholder="Narx (so‘m)">
-<input id="picon" placeholder="Emoji, masalan 🧹">
-<button class="btn blue" onclick="addProduct()">+ Mahsulot qo‘shish</button>
-</div>
-<div class="admin-list" id="adminList"></div>
-<hr style="margin:25px 0;border:0;border-top:1px solid #e2e8f0">
-<h3>📦 Buyurtmalar</h3>
-<div id="ordersList"><p class="muted">Hozircha buyurtmalar yo‘q.</p></div>
-<button class="btn" style="margin-top:15px" onclick="logoutAdmin()">Chiqish</button>
-</div>
-</div></section>
 
-
-<section class="container" id="contact">
-<div class="about">
-<h2>📞 Biz bilan bog‘laning</h2>
-<p><b>B-TREND MCHJ</b> — xaridlar va mahsulotlar bo‘yicha murojaat uchun:</p>
-<div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:15px">
-<a class="btn blue" href="tel:+998333821111">📞 +998 33 382 11 11</a>
-<a class="btn" href="https://t.me/Usmanovich111" target="_blank">📲 Telegram: @Usmanovich111</a>
+<!-- Buyurtma Modali -->
+<div class="modal" id="modal">
+  <div class="box">
+    <span class="close" onclick="closeModal()">×</span>
+    <h2>Buyurtma ma’lumotlari</h2>
+    <form onsubmit="submitOrder(event)">
+      <input id="phone" required placeholder="Telefon raqami (masalan: +998901234567)">
+      <textarea id="address" rows="3" placeholder="Yetkazib berish manzili" required></textarea>
+      <button type="submit">Buyurtmani yuborish</button>
+    </form>
+  </div>
 </div>
+
+<!-- Profil Modali -->
+<div class="modal" id="profilePanel">
+  <div class="box">
+    <span class="close" onclick="closeProfile()">×</span>
+    <h2>👤 Mening profilim</h2>
+    <label>Ism</label>
+    <input id="profileFirstName" type="text" placeholder="Ismingiz">
+    <label>Familiya</label>
+    <input id="profileLastName" type="text" placeholder="Familiyangiz">
+    <label>Yosh</label>
+    <input id="profileAge" type="number" min="1" max="120" placeholder="Yoshingiz">
+    <button onclick="saveProfile()">Profilni saqlash</button>
+    <p id="profileStatus" style="text-align:center; margin-top:10px; color:#555; font-size:13px;"></p>
+  </div>
 </div>
-</section>
-
-<footer>© 2026 B-TREND MARKET | B-TREND MCHJ<br><br>📞 +998 33 382 11 11 &nbsp; | &nbsp; 📲 @Usmanovich111</footer>
-
-<div class="modal" id="modal"><div class="box"><span class="close" onclick="closeModal()">×</span><div id="modalContent"></div></div></div>
 
 <script>
-const defaultProducts=[
-{name:"ART-VCB 0316E changyutgich",cat:"Maishiy texnika",price:0,icon:"🧹"},
-{name:"A4 ofis qog‘ozi",cat:"Kanselyariya",price:0,icon:"📄"},
-{name:"Ofis ruchkasi",cat:"Kanselyariya",price:0,icon:"🖊️"},
-{name:"Chinni idishlar",cat:"Xo‘jalik mollari",price:0,icon:"🍽️"},
-{name:"Ofis stuli",cat:"Mebel",price:0,icon:"🪑"},
-{name:"Televizor",cat:"Maishiy texnika",price:0,icon:"📺"}
+const products = [
+  {name:"ART-VCB 0316E changyutgich", cat:"Maishiy texnika", price:"Narxni so‘rash", icon:"🧹"},
+  {name:"A4 ofis qog‘ozi", cat:"Kanselyariya", price:"Narxni so‘rash", icon:"📄"},
+  {name:"Ofis ruchkasi", cat:"Kanselyariya", price:"Narxni so‘rash", icon:"🖊️"},
+  {name:"Chinni idishlar", cat:"Xo‘jalik mollari", price:"Narxni so‘rash", icon:"🍽️"},
+  {name:"Ofis stuli", cat:"Mebel", price:"Narxni so‘rash", icon:"🪑"},
+  {name:"Televizor", cat:"Maishiy texnika", price:"Narxni so‘rash", icon:"📺"}
 ];
-let products=JSON.parse(localStorage.getItem('bt_products')||'null')||defaultProducts, cart=[], activeCat='Barchasi';
-const ADMIN_PASSWORD='Bax1111';
-function loginAdmin(){
- if(document.getElementById('adminPass').value===ADMIN_PASSWORD){
-  document.getElementById('loginArea').style.display='none';
-  document.getElementById('panelArea').style.display='block';
-  renderAdmin();
- } else alert('Parol noto‘g‘ri ❌');
-}
-function logoutAdmin(){
- document.getElementById('panelArea').style.display='none';
- document.getElementById('loginArea').style.display='block';
- document.getElementById('adminPass').value='';
+
+let selected = "";
+
+function renderProducts(list) {
+  const container = document.getElementById("products");
+  if(list.length === 0) {
+    container.innerHTML = `<p style="grid-column: 1/-1; text-align:center; color: #888;">Hech narsa topilmadi 😕</p>`;
+    return;
+  }
+  container.innerHTML = list.map((p) => `
+    <div class="card">
+      <div class="pic">${p.icon}</div>
+      <small>${p.cat}</small>
+      <h3>${p.name}</h3>
+      <div class="price">${p.price}</div>
+      <button onclick="openOrder('${p.name}')">🛒 Buyurtma berish</button>
+    </div>
+  `).join("");
 }
 
-function save(){localStorage.setItem('bt_products',JSON.stringify(products))}
-function setCat(c,e){activeCat=c;document.querySelectorAll('.cat').forEach(x=>x.classList.remove('active'));e.classList.add('active');render()}
-function render(){let q=document.getElementById('search').value.toLowerCase(),s=document.getElementById('sort').value;let a=products.filter(p=>(activeCat==='Barchasi'||p.cat===activeCat)&&p.name.toLowerCase().includes(q));if(s==='low')a.sort((x,y)=>(x.price||0)-(y.price||0));if(s==='high')a.sort((x,y)=>(y.price||0)-(x.price||0));document.getElementById('productGrid').innerHTML=a.map((p,i)=>`<div class="card"><div class="pic">${p.icon||'📦'}</div><small>${p.cat}</small><h3>${p.name}</h3><div class="price">${p.price?p.price.toLocaleString()+' so‘m':'Narxni so‘rash'}</div><button class="btn" onclick="addCart(${products.indexOf(p)})">🛒 Savatchaga qo‘shish</button></div>`).join('');renderAdmin()}
-function addCart(i){let p=products[i],x=cart.find(c=>c.i===i);if(x)x.q++;else cart.push({i,q:1});updateCart();alert('Savatchaga qo‘shildi ✅')}
-function updateCart(){document.getElementById('cartCount').innerText=cart.reduce((a,x)=>a+x.q,0)}
-function openCart(){let total=0;let rows=cart.map(x=>{let p=products[x.i];total+=(p.price||0)*x.q;return `<div class="cart-item"><div><b>${p.name}</b><br><span class="muted">${p.price?p.price.toLocaleString()+' so‘m':'Narxni so‘rash'}</span></div><input class="qty" type="number" min="1" value="${x.q}" onchange="changeQty(${x.i},this.value)"></div>`}).join('');document.getElementById('modalContent').innerHTML=`<h2>🛒 Savatcha</h2>${rows||'<p>Savatcha bo‘sh.</p>'}<h3>Jami: ${total.toLocaleString()} so‘m</h3>${cart.length?'<button class="btn" onclick="checkout()">Buyurtma berish</button>':''}`;document.getElementById('modal').style.display='flex'}
-function changeQty(i,q){let x=cart.find(c=>c.i===i);if(x)x.q=Math.max(1,+q);updateCart();openCart()}
-function checkout(){document.getElementById('modalContent').innerHTML=`<h2>Buyurtma ma’lumotlari</h2><form onsubmit="submitOrder(event)"><input id="oname" required placeholder="Tashkilot / F.I.Sh."><input id="ophone" required placeholder="Telefon raqami"><textarea id="oaddress" rows="3" placeholder="Yetkazib berish manzili"></textarea><button class="btn">Buyurtmani yuborish</button></form>`}
-function submitOrder(e){e.preventDefault();let list=cart.map(x=>products[x.i].name+' x '+x.q).join('\\n');let text=`Buyurtma:\\n${list}\\n\\nMijoz: ${oname.value}\\nTelefon: ${ophone.value}\\nManzil: ${oaddress.value}`;let orders=JSON.parse(localStorage.getItem('bt_orders')||'[]');
-orders.unshift({id:Date.now(),date:new Date().toLocaleString('uz-UZ'),items:list,customer:oname.value,phone:ophone.value,address:oaddress.value,status:'Yangi'});
-localStorage.setItem('bt_orders',JSON.stringify(orders));
-localStorage.setItem('last_order',text);cart=[];updateCart();document.getElementById('modalContent').innerHTML='<h2>Buyurtma qabul qilindi ✅</h2><p>Tez orada siz bilan bog‘lanamiz.</p>'}
-function ask(name){need.value=name+' — miqdori: ';document.getElementById('request').scrollIntoView({behavior:'smooth'})}
-function sendRequest(e){e.preventDefault();localStorage.setItem('last_request',`So‘rov: ${need.value}\\nMijoz: ${name.value}\\nTelefon: ${phone.value}`);document.getElementById('modalContent').innerHTML='<h2>So‘rov qabul qilindi ✅</h2><p>Ma’lumot saqlandi. Biz bilan bog‘laning:</p><p>📞 <a href="tel:+998333821111">+998 33 382 11 11</a><br>📲 <a href="https://t.me/Usmanovich111" target="_blank">@Usmanovich111</a></p>';document.getElementById('modal').style.display='flex';e.target.reset()}
-function addProduct(){let n=pname.value.trim(),c=pcat.value,pr=+pprice.value||0,ic=picon.value||'📦';if(!n)return alert('Mahsulot nomini kiriting');products.push({name:n,cat:c,price:pr,icon:ic});save();pname.value='';pprice.value='';picon.value='';render();alert('Mahsulot qo‘shildi ✅')}
-function deleteProduct(i){if(confirm('O‘chirasizmi?')){products.splice(i,1);save();render()}}
-function renderAdmin(){
-document.getElementById('adminList').innerHTML=products.map((p,i)=>`<div class="cart-item"><span>${p.icon} <b>${p.name}</b> — ${p.cat} — ${p.price?p.price.toLocaleString()+' so‘m':'Narxni so‘rash'}</span><button onclick="deleteProduct(${i})">🗑️</button></div>`).join('');
-let orders=JSON.parse(localStorage.getItem('bt_orders')||'[]');
-document.getElementById('ordersList').innerHTML=orders.length?orders.map(o=>`<div class="order-card"><h4>🛒 Buyurtma #${o.id}</h4><div><b>👤 Mijoz:</b> ${o.customer}</div><div><b>📞 Telefon:</b> ${o.phone}</div><div><b>📍 Manzil:</b> ${o.address||'Ko‘rsatilmagan'}</div><div><b>📦 Tovarlar:</b><br>${o.items.replace(/\\n/g,'<br>')}</div><div class="muted">🕐 ${o.date}</div><div class="order-actions"><select onchange="changeOrderStatus(${o.id},this.value)"><option ${o.status==='Yangi'?'selected':''}>Yangi</option><option ${o.status==='Qabul qilindi'?'selected':''}>Qabul qilindi</option><option ${o.status==='Yetkazildi'?'selected':''}>Yetkazildi</option><option ${o.status==='Bekor qilindi'?'selected':''}>Bekor qilindi</option></select><button onclick="deleteOrder(${o.id})">🗑️ O‘chirish</button></div></div>`).join(''):'<p class="muted">Hozircha buyurtmalar yo‘q.</p>';
+function filterProducts() {
+  const search = document.getElementById("searchInput").value.toLowerCase();
+  const cat = document.getElementById("categorySelect").value;
+
+  const filtered = products.filter(p => {
+    const matchesSearch = p.name.toLowerCase().includes(search);
+    const matchesCat = cat === "all" || p.cat === cat;
+    return matchesSearch && matchesCat;
+  });
+
+  renderProducts(filtered);
 }
-function changeOrderStatus(id,status){let orders=JSON.parse(localStorage.getItem('bt_orders')||'[]');let o=orders.find(x=>x.id===id);if(o){o.status=status;localStorage.setItem('bt_orders',JSON.stringify(orders));renderAdmin()}}
-function deleteOrder(id){if(confirm('Bu buyurtmani o‘chirasizmi?')){let orders=JSON.parse(localStorage.getItem('bt_orders')||'[]').filter(x=>x.id!==id);localStorage.setItem('bt_orders',JSON.stringify(orders));renderAdmin()}}
-function closeModal(){document.getElementById('modal').style.display='none'}
-render();updateCart();
+
+function openOrder(productName){
+  selected = productName;
+  document.getElementById("modal").style.display = "flex";
+}
+
+function closeModal(){
+  document.getElementById("modal").style.display = "none";
+}
+
+async function submitOrder(e){
+  e.preventDefault();
+  const btn = e.target.querySelector("button");
+  btn.disabled = true;
+  btn.textContent = "Yuborilmoqda...";
+  
+  try {
+    const r = await fetch("/.netlify/functions/send-order", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({
+        product: selected,
+        phone: document.getElementById("phone").value,
+        address: document.getElementById("address").value
+      })
+    });
+    
+    const data = await r.json();
+    if(!r.ok) throw new Error(data.error || "Xatolik yuz berdi");
+    
+    alert("Buyurtma muvaffaqiyatli yuborildi ✅");
+    e.target.reset();
+    closeModal();
+  } catch(err) {
+    alert("Xatolik: " + err.message);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = "Buyurtmani yuborish";
+  }
+}
+
+// Profil Funksiyalari
+function openProfile(){
+  const p = JSON.parse(localStorage.getItem('btrend_profile') || '{}');
+  document.getElementById('profileFirstName').value = p.firstName || '';
+  document.getElementById('profileLastName').value = p.lastName || '';
+  document.getElementById('profileAge').value = p.age || '';
+  document.getElementById('profileStatus').textContent = '';
+  document.getElementById('profilePanel').style.display = 'flex';
+}
+
+function closeProfile(){
+  document.getElementById('profilePanel').style.display = 'none';
+}
+
+function saveProfile(){
+  const firstName = document.getElementById('profileFirstName').value.trim();
+  const lastName = document.getElementById('profileLastName').value.trim();
+  const age = document.getElementById('profileAge').value.trim();
+  
+  if(!firstName || !lastName || !age){
+    document.getElementById('profileStatus').textContent = 'Iltimos, barcha maydonlarni to‘ldiring.';
+    return;
+  }
+  
+  localStorage.setItem('btrend_profile', JSON.stringify({firstName, lastName, age}));
+  document.getElementById('profileStatus').textContent = '✅ Profil saqlandi!';
+  setTimeout(closeProfile, 800);
+}
+
+// Dastlabki yuklanish
+renderProducts(products);
 </script>
-</body></html>
+
+</body>
+</html>
